@@ -1,0 +1,260 @@
+<style>
+  :root{
+  --sideways:0px;
+  }
+
+  .stars {
+    background-color: yellow;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+	margin:auto;
+	box-shadow: 0px 0px 150px 200px yellow;
+	z-index:0
+	}
+	
+	.animated{
+		animation-name:spin;
+		animation-duration:10s;
+		animation-iteration-count:infinite;
+		animation-timing-function:linear;
+		
+		}
+
+	@keyframes spin{
+	50%{
+		transform:rotate(calc(180deg + var(--degrees)));
+		}
+	
+	100%{
+		transform:rotate(calc(360deg + var(--degrees)));
+		}
+
+  }
+  
+
+	.centered{
+		position:fixed;
+		top:90%;
+		left:50%;
+		margin-top:-15px;
+		margin-left:-15px;
+		
+		}
+		
+	.raycentered{
+		position:fixed;
+		top:90%;
+		left:50%;
+		margin-top:0px;
+		margin-left:-120px;
+		transform-origin:top;
+		transform:rotate(var(--degrees));
+		
+		}
+	.ray{
+	background-color:yellow;
+	width:30px;
+	height:500px;
+	transform:skewX(20);
+	}
+	
+	.trapezoid {
+      border-bottom: 2000px solid yellow;
+      border-left: 120px solid transparent;
+      border-right: 120px solid transparent;
+      height: 0;
+      width: 2px;
+	  z-index:-1
+    }
+	
+	.icon{
+		position:fixed;
+		display:float;
+		top:-250px;
+		z-index:2;
+		margin:auto;
+		}
+	.falling{
+		
+		animation-name:fall;
+		animation-duration:4s;
+		animation-iteration-count:1;
+		animation-timing-function:linear;
+	 }
+	@keyframes fall{
+	0%{
+	transform:translate(var(--sideways),0px);
+	}
+	100%{
+	transform:translate(var(--sideways),500vh);
+	}
+	}
+	.eggman{
+	    position:fixed;
+	    transform-origin: center top;
+		left:50%;
+		margin-left:-25vh;
+		height:70vh;
+		width:50vh;
+		object-fit:contain;
+		
+		overflow:hidden;
+		
+		
+		
+		
+
+	  z-index:1;
+	  }
+	.eggfall{
+	  animation-name:egg;
+	  animation-duration:40s;
+	  animation-iteration-count:1;
+	  animation-timing-function:linear;
+	  animation-fill-mode:forwards;
+	  }
+	 @keyframes egg{
+	 0%{
+	    
+		margin-top:100vh;
+	    }
+	  25%{
+	    
+		margin-top:100vh;
+	    }
+	  60%{
+		
+		margin-top:30vh;
+		transform:scale(1.0);
+		}
+		
+	  
+	  100%{
+	    margin-top:5vh;
+		transform:scale(1.5);
+		}
+	  }
+	 
+	 
+	
+</style>
+
+
+<div class="stars centered"></div>
+<!---<div class= "ray raycentered "></div>-->
+<div class= "trapezoid raycentered animated" style="--degrees:0deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:15deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:30deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:45deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:60deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:75deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:90deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:105deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:120deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:135deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:150deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:165deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:180deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:195deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:210deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:225deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:240deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:255deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:270deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:285deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:300deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:315deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:330deg"></div>
+<div class= "trapezoid raycentered animated" style="--degrees:345deg"></div>
+<div>
+<audio id = "player" src="miracleintro.mp3" AutoPlay hidden>
+
+
+</div>
+<div><img class= "eggman eggfall" src = "https://i.imgur.com/418uein.png"></div>
+<div id=debug hidden>
+<p id=demo>position</p>
+<p id=duration>duration</p>
+<p id=imagenum>imagenum</p>
+<p id=images>images</p>
+<p id=song>currentsong</p>
+</div>
+<script>
+	var music = document.getElementById('player');
+		music.addEventListener('ended',function(){
+		music.pause();
+		music.src = "miracleloop.mp3";
+		music.load();
+		music.play();
+		});
+	var song = document.getElementById('song');
+	document.getElementById("song").innerHTML = music.src;
+setTimeout(function(){
+	var number = 0;
+	
+	function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+setInterval(function(){ 
+
+	
+
+  var images = ["https://cdn.wikimg.net/en/splatoonwiki/images/d/d3/S2_Splatfest_Icon_Cake.png","https://cdn.wikimg.net/en/splatoonwiki/images/6/6c/S2_Splatfest_Icon_Ice_Cream.png","https://cdn.wikimg.net/en/splatoonwiki/images/5/5f/S2_Splatfest_Icon_Mayo.png","https://cdn.wikimg.net/en/splatoonwiki/images/0/04/S2_Splatfest_Icon_Ketchup.png","https://cdn.wikimg.net/en/splatoonwiki/images/4/4a/S2_Splatfest_Icon_Flight.png","https://cdn.wikimg.net/en/splatoonwiki/images/d/d6/S2_Splatfest_Icon_Invisibility.png","https://cdn.wikimg.net/en/splatoonwiki/images/e/e8/S2_Splatfest_Icon_Vampire.png","https://cdn.wikimg.net/en/splatoonwiki/images/d/db/S2_Splatfest_Icon_Werewolf.png","https://cdn.wikimg.net/en/splatoonwiki/images/5/53/S2_Splatfest_Icon_Sci-Fi.png","https://cdn.wikimg.net/en/splatoonwiki/images/5/51/S2_Splatfest_Icon_Fantasy.png","https://cdn.wikimg.net/en/splatoonwiki/images/d/d2/S2_Splatfest_Icon_Sweater.png","https://cdn.wikimg.net/en/splatoonwiki/images/b/bf/S2_Splatfest_Icon_Sock.png","https://cdn.wikimg.net/en/splatoonwiki/images/8/86/S2_Splatfest_Icon_Action.png","https://cdn.wikimg.net/en/splatoonwiki/images/2/2d/S2_Splatfest_Icon_Comedy.png","https://cdn.wikimg.net/en/splatoonwiki/images/4/48/S2_Splatfest_Icon_Money.png","https://cdn.wikimg.net/en/splatoonwiki/images/c/cf/S2_Splatfest_Icon_Love.png","https://cdn.wikimg.net/en/splatoonwiki/images/b/b3/S2_Splatfest_Icon_Chicken.png","https://cdn.wikimg.net/en/splatoonwiki/images/1/1a/S2_Splatfest_Icon_Egg.png","https://cdn.wikimg.net/en/splatoonwiki/images/d/df/S2_Splatfest_Icon_Baseball.png","https://cdn.wikimg.net/en/splatoonwiki/images/5/58/S2_Splatfest_Icon_Soccer.png","https://cdn.wikimg.net/en/splatoonwiki/images/b/bc/S2_Splatfest_Icon_Raph.png","https://cdn.wikimg.net/en/splatoonwiki/images/5/54/S2_Splatfest_Icon_Leo.png","https://cdn.wikimg.net/en/splatoonwiki/images/d/d8/S2_Splatfest_Icon_Mikey.png","https://cdn.wikimg.net/en/splatoonwiki/images/a/af/S2_Splatfest_Icon_Donnie.png","https://cdn.wikimg.net/en/splatoonwiki/images/4/47/S2_Splatfest_Icon_Pulp.png","https://cdn.wikimg.net/en/splatoonwiki/images/9/9a/S2_Splatfest_Icon_No-Pulp.png","https://cdn.wikimg.net/en/splatoonwiki/images/b/b1/S2_Splatfest_Icon_Squid.png","https://cdn.wikimg.net/en/splatoonwiki/images/7/7b/S2_Splatfest_Icon_Octopus.png","https://cdn.wikimg.net/en/splatoonwiki/images/f/f0/S2_Splatfest_Icon_Fork.png","https://cdn.wikimg.net/en/splatoonwiki/images/b/bd/S2_Splatfest_Icon_Spoon.png","https://cdn.wikimg.net/en/splatoonwiki/images/8/88/S2_Splatfest_Icon_Retro.png","https://cdn.wikimg.net/en/splatoonwiki/images/d/dc/S2_Splatfest_Icon_Modern.png","https://cdn.wikimg.net/en/splatoonwiki/images/5/5a/S2_Splatfest_Icon_Trick.png","https://cdn.wikimg.net/en/splatoonwiki/images/c/c4/S2_Splatfest_Icon_Treat.png","https://cdn.wikimg.net/en/splatoonwiki/images/5/5d/S2_Splatfest_Icon_Salsa.png","https://cdn.wikimg.net/en/splatoonwiki/images/1/1a/S2_Splatfest_Icon_Guac.png","https://cdn.wikimg.net/en/splatoonwiki/images/a/a2/S2_Splatfest_Icon_Hero.png","https://cdn.wikimg.net/en/splatoonwiki/images/e/e5/S2_Splatfest_Icon_Villain.png","https://cdn.wikimg.net/en/splatoonwiki/images/8/85/S2_Splatfest_Icon_Fam.png","https://cdn.wikimg.net/en/splatoonwiki/images/3/3c/S2_Splatfest_Icon_Friend.png","https://cdn.wikimg.net/en/splatoonwiki/images/0/0b/S2_Splatfest_Icon_Pancake.png","https://cdn.wikimg.net/en/splatoonwiki/images/4/4a/S2_Splatfest_Icon_Waffle.png","https://cdn.wikimg.net/en/splatoonwiki/images/3/3c/S2_Splatfest_Icon_Knight.png","https://cdn.wikimg.net/en/splatoonwiki/images/6/6b/S2_Splatfest_Icon_Wizard.png","https://cdn.wikimg.net/en/splatoonwiki/images/3/35/S2_Splatfest_Icon_Hare.png","https://cdn.wikimg.net/en/splatoonwiki/images/f/fc/S2_Splatfest_Icon_Tortoise.png","https://cdn.wikimg.net/en/splatoonwiki/images/7/75/S2_Splatfest_Icon_Time_Travel.png","https://cdn.wikimg.net/en/splatoonwiki/images/7/7b/S2_Splatfest_Icon_Teleportation.png","https://cdn.wikimg.net/en/splatoonwiki/images/3/30/S2_Splatfest_Icon_Unicorn.png","https://cdn.wikimg.net/en/splatoonwiki/images/2/26/S2_Splatfest_Icon_Narwhal.png","https://cdn.wikimg.net/en/splatoonwiki/images/a/ae/S2_Splatfest_Icon_Chaos.png","https://cdn.wikimg.net/en/splatoonwiki/images/c/c7/S2_Splatfest_Icon_Order.png"];
+  var number2 = getRandomInt(0,51);
+  document.getElementById("imagenum").innerHTML = number2;
+  var currentimg = images[number2];
+  document.getElementById("images").innerHTML = currentimg;
+ 
+ var randomindex = getRandomInt(1,2);
+	if(randomindex==1){
+	  randomindex--;
+	  }
+ 
+ 
+ 
+  var pos = getRandomInt(-10,100);
+	pos = pos + 'vw';
+  document.getElementById("demo").innerHTML = pos;
+  var duration = getRandomInt(8,20);
+
+   duration = duration + 's';
+   document.getElementById("duration").innerHTML = duration;
+  
+  var oImg = document.createElement("img");
+  oImg.setAttribute('id',number++);
+  oImg.setAttribute('src', currentimg);
+  oImg.setAttribute('alt', 'na');
+  oImg.setAttribute('class','falling icon');
+  oImg.setAttribute('style','animation-duration:'+duration +';z-index:'+randomindex);
+  
+  
+  if (number > 100){
+	number = 0;
+	}
+  document.body.appendChild(oImg);
+  try{
+	document.getElementById(number - 30).remove()
+	}
+	catch (err){
+	1+1;
+	}
+	
+
+	
+  
+ 
+  const root = document.styleSheets[0].rules[0].style
+  root.setProperty('--sideways',pos);
+
+}, 250);
+}, 9000);
+
+
+</script>
+<!---<img class = "icon falling" src="https://cdn.wikimg.net/en/splatoonwiki/images/b/b1/S2_Splatfest_Icon_Squid.png">-->
+
+</html>
